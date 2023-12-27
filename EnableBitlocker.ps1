@@ -15,4 +15,5 @@ Enable-BitLocker -MountPoint $bitlockermount -EncryptionMethod XtsAes256 -UsedSp
 $bitlockerkeys = (Get-BitLockerVolume).KeyProtector  | Export-Csv -Path C:\BitlockerKeys.csv -Delimiter ';' -NoTypeInformation
 
 # To verify information has been captured, you can run:
-Get-Content -Path .\BitlockerKeys.csv
+$data = Import-Csv -Delimiter ";" -Path C:\BitlockerKeys.csv
+$data
