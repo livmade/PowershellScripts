@@ -3,5 +3,4 @@
 
 This is a repo of custom PS scripts I've made for work, play, etc.
 
-![image](https://github.com/livmade/PowershellScripts/assets/64279381/e6170c61-7648-4dbb-afa0-78b2898331c7)
 
