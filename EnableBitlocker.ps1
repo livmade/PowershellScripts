@@ -9,9 +9,9 @@ if($bitlockermount -like "*") {
 <# Bitlocker encryption below starting on line 10. Currently specified to TPM, but can be changed to a 
 different combination if wanted/ warranted/ required per compliance #>
 Enable-BitLocker -MountPoint $bitlockermount -EncryptionMethod Aes256 -TpmProtector -UsedSpaceOnly
-## $bitlockerkeys = (Get-BitLockerVolume).KeyProtector | Export-Csv -Path .\BitlockerKeys.csv -Delimiter ';' -NoTypeInformation
+$bitlockerkeys = (Get-BitLockerVolume).KeyProtector # | Export-Csv -Path .\BitlockerKeys.csv -Delimiter ';' -NoTypeInformation
 
-#Above commented out, only required if using something other than TPM
+#Above export commented out, only required if using something other than TPM
 if($bitlockerkeys -ne $null) {
     Write-Host "Encryption complete. Restart may be required."
 }
