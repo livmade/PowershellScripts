@@ -1,4 +1,3 @@
-pwsh.exe -ExecutionPolicy Bypass
 $bitlockervolume = (Get-BitLockerVolume ).VolumeStatus #grabbing status of volumes on device
 $bitlockermount = if($bitlockervolume -eq 'FullyDecrypted') {
     (Get-BitLockerVolume).MountPoint
@@ -8,11 +7,12 @@ if($bitlockermount -like "*") {
 }
 <# Bitlocker encryption below starting on line 10. Currently specified to TPM, but can be changed to a 
 different combination if wanted/ warranted/ required per compliance #>
-Enable-BitLocker -MountPoint $bitlockermount -EncryptionMethod Aes256 -TpmProtector -UsedSpaceOnly
-# $bitlockerkeys = (Get-BitLockerVolume).KeyProtector  | Export-Csv -Path .\BitlockerKeys.csv -Delimiter ';' -NoTypeInformation
+Enable-BitLocker -MountPoint $bitlockermount -EncryptionMethod XtsAes256 -UsedSpaceOnly -SkipHardwareTest -RecoveryPasswordProtector
 
-#Above export commented out, only required if using something other than TPM
-<# if($bitlockerkeys -ne $null) {
-    Write-Host "Encryption complete. Restart may be required."
-} #>
-# Above commented out, only required if using other encryption aside from TPM
+
+# After restart, encrypting can take up to an hour...
+# Be sure to run:
+$bitlockerkeys = (Get-BitLockerVolume).KeyProtector  | Export-Csv -Path C:\BitlockerKeys.csv -Delimiter ';' -NoTypeInformation
+
+# To verify information has been captured, you can run:
+Get-Content -Path .\BitlockerKeys.csv
