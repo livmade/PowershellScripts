@@ -1,3 +1,4 @@
+pwsh.exe -ExecutionPolicy Bypass
 $bitlockervolume = (Get-BitLockerVolume ).VolumeStatus #grabbing status of volumes on device
 $bitlockermount = if($bitlockervolume -eq 'FullyDecrypted') {
     (Get-BitLockerVolume).MountPoint
